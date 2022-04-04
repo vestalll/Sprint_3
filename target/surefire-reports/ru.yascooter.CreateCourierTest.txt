@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ru.yascooter.CreateCourierTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 13.234 s - in ru.yascooter.CreateCourierTest
