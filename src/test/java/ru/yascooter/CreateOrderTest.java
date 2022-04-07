@@ -6,6 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +51,8 @@ public class CreateOrderTest {
         }
 
         @Test
-        //Cоздание заказа
+        @DisplayName("Cоздание заказа")
+        @Step("Код ответа 201. Трек-номер получен")
         public void orderCreation() {
             ValidatableResponse createResponse = courierClient.createOrder(order);
             int statusCode = createResponse.extract().statusCode();

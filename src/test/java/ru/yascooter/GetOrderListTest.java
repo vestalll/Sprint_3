@@ -1,5 +1,7 @@
 package ru.yascooter;
 
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +18,8 @@ public class GetOrderListTest {
         courierClient = new CourierClient();
     }
     @Test
+    @DisplayName("Получение списка заказов")
+    @Step("Код ответа 200. Список заказов получен")
     public void getOrderList() {
         ValidatableResponse orderListResponse = courierClient.getOrderList();
         int statusCode = orderListResponse.extract().statusCode();

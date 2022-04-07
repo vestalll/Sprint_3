@@ -1,11 +1,13 @@
 package ru.yascooter;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.*;
 
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import io.qameta.allure.Step;
 
 public class CreateCourierTest {
     CourierClient courierClient;
@@ -28,18 +30,20 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера
+    @DisplayName("Создание курьера с заполнением всех полей верными значениями")
+    @Step("Код ответа 201")
     public void courierCreationWithValidCredentials() {
     ValidatableResponse createResponse = courierClient.create(courier);
     statusCode = createResponse.extract().statusCode();
- //   String responseText = createResponse.extract().path("ok");
     assertThat( "Courier isn't created", statusCode, equalTo(SC_CREATED));
- //  assertThat("Courier ID is incorrect", responseText, is("ok"));
+
     }
 
     @Test
-    //Создание курьера без поля "Логин"
+    @DisplayName("Создание курьера без поля \"Логин\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithoutLogin() {
+
         courier.setLogin(null);
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
@@ -49,7 +53,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера без поля "Пароль"
+    @DisplayName("Создание курьера без поля \"Пароль\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithoutPassword() {
         courier.setPassword(null);
         ValidatableResponse createResponse = courierClient.create(courier);
@@ -60,9 +65,9 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера без поля "FirstName"
+    @DisplayName("Создание курьера без поля \"First Name\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     @Ignore
-    //Баг либо не уточнено в спецификации: поле не обязательно, запись создаётся
     public void courierCreationWithoutFirstName() {
         courier.setFirstName(null);
         ValidatableResponse createResponse = courierClient.create(courier);
@@ -73,7 +78,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера с пустым полем "Логин"
+    @DisplayName("Создание курьера с пустым значением поля \"Логин\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithEmptyLogin() {
         courier.setLogin("");
         ValidatableResponse createResponse = courierClient.create(courier);
@@ -84,7 +90,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера без поля "Пароль"
+    @DisplayName("Создание курьера с пустым значением поля \"Пароль\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithEmptyPassword() {
         courier.setPassword("");
         ValidatableResponse createResponse = courierClient.create(courier);
@@ -95,9 +102,9 @@ public class CreateCourierTest {
     }
 
     @Test
-    //Создание курьера без поля "FirstName"
     @Ignore
-    //Баг либо не уточнено в спецификации: поле не обязательно, запись создаётся
+    @DisplayName("Создание курьера с пустым значением поля \"FirstName\"")
+    @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithEmptyFirstName() {
         courier.setFirstName("");
         ValidatableResponse createResponse = courierClient.create(courier);
@@ -108,6 +115,8 @@ public class CreateCourierTest {
     }
 
     @Test
+    @DisplayName("Создание курьера со значениями полей \"Логин\" и \"Пароль\" существующей записи")
+    @Step("Код ответа 409, сообщение \"Этот логин уже используется. Попробуйте другой.\"")
     public void courierCreationWithExistedCredentials() {
         ValidatableResponse createResponse = courierClient.create(courier);
         ValidatableResponse createResponse2 = courierClient.create(courier);

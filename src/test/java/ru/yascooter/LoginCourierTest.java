@@ -8,6 +8,8 @@ import org.junit.Test;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 
 public class LoginCourierTest {
 
@@ -32,7 +34,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    //Авторизация со всеми обязательными полями. В ответе возвращается id.
+    @DisplayName("Авторизация со всеми обязательными полями. В ответе возвращается id.")
+    @Step("Код ответа 201. Значение ID получено.")
     public void courierLoginWithValidCredentials() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials(courier.getLogin(), courier.getPassword()));
         statusCode = loginResponse.extract().statusCode();
@@ -42,7 +45,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    //Ошибка при авторизации с несуществующим логином
+    @DisplayName("Ошибка при авторизации с несуществующим логином")
+    @Step("Код ответа 404. Сообщение \"Учетная запись не найдена\"")
     public void courierLoginWithNonExistedLogin() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials("nonexistedlogin", courier.getPassword()));
         statusCode = loginResponse.extract().statusCode();
@@ -51,8 +55,10 @@ public class LoginCourierTest {
         assertThat("Invalid message text after courier authorization with incorrect login", messageText, equalTo("Учетная запись не найдена") );
     }
 
+
     @Test
-    //Ошибка при авторизации с несуществующим паролем
+    @DisplayName("Ошибка при авторизации с несуществующим паролем")
+    @Step("Код ответа 404. Сообщение \"Учетная запись не найдена\"")
     public void courierLoginWithNonExistedPassword() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials(courier.getLogin(), "nonexistedpassword"));
         statusCode = loginResponse.extract().statusCode();
@@ -62,7 +68,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    //Ошибка при авторизации c пустым значением логина
+    @DisplayName("Ошибка при авторизации c пустым значением логина")
+    @Step("Код ответа 400. Сообщение \"Недостаточно данных для входа\"")
     public void courierLoginWithEmptyLogin() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials("", courier.getPassword()));
         statusCode = loginResponse.extract().statusCode();
@@ -72,17 +79,19 @@ public class LoginCourierTest {
     }
 
     @Test
-    //Ошибка при авторизации с пустым значением пароля
+    @DisplayName("Ошибка при авторизации с пустым значением пароля")
+    @Step("Код ответа 400. Сообщение \"Недостаточно данных для входа\"")
     public void courierLoginWithEmptyPassword() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials(courier.getLogin(), ""));
         statusCode = loginResponse.extract().statusCode();
         messageText = loginResponse.extract().path("message");
         assertThat( "Invalid status code after courier authorization with empty password", statusCode, equalTo(SC_BAD_REQUEST));
-        assertThat("Invalid message text after courier authorization with empty password", messageText, equalTo("Недостаточно данных для входа") );
+        assertThat("Invalid message text after courier authorization with empty password", messageText, equalTo("Недостаточно данных для входа"));
     }
 
     @Test
-    //Ошибка при авторизации без значения поля логина в запросе
+    @DisplayName("Ошибка при авторизации без значения поля логина в запросе")
+    @Step("Код ответа 400. Сообщение \"Недостаточно данных для входа\"")
     public void courierLoginWithoutLoginField() {
         ValidatableResponse loginResponse = courierClient.login(new CourierCredentials(null, courier.getPassword()));
         statusCode = loginResponse.extract().statusCode();
@@ -92,7 +101,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    //Ошибка при авторизации без значения поля пароль в запросе
+    @DisplayName("Ошибка при авторизации без значения поля пароль в запросе")
+    @Step("Код ответа 400. Сообщение \"Недостаточно данных для входа\"")
     @Ignore
     //Тест падает из-за бага: в ответе возвращается статус-код 500 вместо 400
     public void courierLoginWithoutPasswordField() {
