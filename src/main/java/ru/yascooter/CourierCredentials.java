@@ -18,6 +18,4 @@ public class CourierCredentials {
     public String getPassword() {
         return password;
     }
-
-
 }

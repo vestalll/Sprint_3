@@ -7,6 +7,7 @@ import static io.restassured.RestAssured.given;
 public class CourierClient extends ScooterRestClient {
 
     private static final String COURIER_PATH = ScooterApiEndpoint.courier;
+
     private static final String ORDER_PATH = ScooterApiEndpoint.orders;
 
     public ValidatableResponse login(CourierCredentials credentials) {
@@ -61,5 +62,4 @@ public class CourierClient extends ScooterRestClient {
                 .put(ORDER_PATH + "cancel")
                 .then();
     }
-
 }
