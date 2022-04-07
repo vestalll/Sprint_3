@@ -7,6 +7,7 @@ import org.junit.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+
 import io.qameta.allure.Step;
 
 public class CreateCourierTest {
@@ -18,7 +19,7 @@ public class CreateCourierTest {
     int statusCode;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         courierClient = new CourierClient();
         courier = CourierGenerator.getRandom();
         courierCredentials = new CourierCredentials(courier.getLogin(), courier.getPassword());
@@ -33,22 +34,20 @@ public class CreateCourierTest {
     @DisplayName("Создание курьера с заполнением всех полей верными значениями")
     @Step("Код ответа 201")
     public void courierCreationWithValidCredentials() {
-    ValidatableResponse createResponse = courierClient.create(courier);
-    statusCode = createResponse.extract().statusCode();
-    assertThat( "Courier isn't created", statusCode, equalTo(SC_CREATED));
-
+        ValidatableResponse createResponse = courierClient.create(courier);
+        statusCode = createResponse.extract().statusCode();
+        assertThat("Courier isn't created", statusCode, equalTo(SC_CREATED));
     }
 
     @Test
     @DisplayName("Создание курьера без поля \"Логин\"")
     @Step("Код ответа 400, сообщение \"Недостаточно данных для создания учетной записи\"")
     public void courierCreationWithoutLogin() {
-
         courier.setLogin(null);
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation without login", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation without login", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -59,8 +58,8 @@ public class CreateCourierTest {
         courier.setPassword(null);
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation without password", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation without password", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text after courier creation without password", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -72,8 +71,8 @@ public class CreateCourierTest {
         courier.setFirstName(null);
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation without FirstName", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation without FirstName", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text after courier creation without FirstName", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -84,8 +83,8 @@ public class CreateCourierTest {
         courier.setLogin("");
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation with empty login", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation with empty login", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text after courier creation with empty login", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -96,8 +95,8 @@ public class CreateCourierTest {
         courier.setPassword("");
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation with empty password", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation with empty password", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text after courier creation with empty password", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -109,8 +108,8 @@ public class CreateCourierTest {
         courier.setFirstName("");
         ValidatableResponse createResponse = courierClient.create(courier);
         statusCode = createResponse.extract().statusCode();
-        messageText=createResponse.extract().path("message");
-        assertThat( "Invalid status code after courier creation with empty firstname", statusCode, equalTo(SC_BAD_REQUEST));
+        messageText = createResponse.extract().path("message");
+        assertThat("Invalid status code after courier creation with empty firstname", statusCode, equalTo(SC_BAD_REQUEST));
         assertThat("Invalid message text after courier creation with empty firstname", messageText, equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -121,11 +120,9 @@ public class CreateCourierTest {
         ValidatableResponse createResponse = courierClient.create(courier);
         ValidatableResponse createResponse2 = courierClient.create(courier);
         statusCode = createResponse2.extract().statusCode();
-        messageText=createResponse2.extract().path("message");
-        assertThat( "Invalid status code after courier creation with existed credentials", statusCode, equalTo(SC_CONFLICT));
+        messageText = createResponse2.extract().path("message");
+        assertThat("Invalid status code after courier creation with existed credentials", statusCode, equalTo(SC_CONFLICT));
         assertThat("Invalid message text after courier creation with existed credentials", messageText, equalTo("Этот логин уже используется. Попробуйте другой."));
     }
-
-
 }
 
