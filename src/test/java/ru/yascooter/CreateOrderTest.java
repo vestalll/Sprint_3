@@ -9,7 +9,6 @@ import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,23 +21,21 @@ public class CreateOrderTest {
     CourierClient courierClient;
     Order order;
     Integer track;
-    private final String[] scooterColor;
+    private final List<String> scooterColor;
 
-    public CreateOrderTest(String[] scooterColor) {
+    public CreateOrderTest(List<String> scooterColor) {
         this.scooterColor = scooterColor;
     }
 
-    @Parameterized.Parameters(name = "Тестовые данные: {0}{1}{2}{3}")
-    public static List<Object[]> getScooterColor() {
+    @Parameterized.Parameters(name = "Scooter color:{0}")
+    public static List<List<String>> getScooterColor() {
 
-        return Arrays.asList(new Object[][]{
-                {new String[]{"BLACK"}},
-                {new String[]{"GREY"}},
-                {new String[]{"BLACK", "GREY"}},
-                {new String[]{}}
-        });
-    }
-
+        return List.of(
+                List.of("BLACK"),
+                List.of("GREY"),
+                List.of("BLACK", "GREY"),
+                List.of());
+        };
 
     @Before
     public void setUp() {

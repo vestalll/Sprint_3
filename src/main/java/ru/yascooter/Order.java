@@ -1,5 +1,7 @@
 package ru.yascooter;
 
+import java.util.List;
+
 public class Order {
 
     private final String firstName = "Илон";
@@ -18,20 +20,20 @@ public class Order {
 
     private final String comment = "Как можно быстрее, пожалуйста, на 1-2-3";
 
-    private String[] scooterColor;
+    private List<String>  scooterColor;
 
     public Order() {
     }
 
-    public Order(String[] scooterColor) {
+    public Order(List<String> scooterColor) {
         this.scooterColor = scooterColor;
     }
 
-    public String[] getScooterColor() {
+    public List<String> getScooterColor() {
         return scooterColor;
     }
 
-    public void setScooterColor(String[] scooterColor) {
+    public void setScooterColor(List<String> scooterColor) {
         this.scooterColor = scooterColor;
     }
 }
