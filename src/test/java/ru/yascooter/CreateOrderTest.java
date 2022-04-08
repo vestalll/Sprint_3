@@ -28,8 +28,9 @@ public class CreateOrderTest {
         this.scooterColor = scooterColor;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0}{1}{2}{3}")
     public static List<Object[]> getScooterColor() {
+
         return Arrays.asList(new Object[][]{
                 {new String[]{"BLACK"}},
                 {new String[]{"GREY"}},
@@ -37,6 +38,7 @@ public class CreateOrderTest {
                 {new String[]{}}
         });
     }
+
 
     @Before
     public void setUp() {
@@ -50,7 +52,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    @DisplayName("Cоздание заказа")
+    @DisplayName("Создание заказа")
     @Step("Код ответа 201. Трек-номер получен")
     public void orderCreation() {
         ValidatableResponse createResponse = courierClient.createOrder(order);
