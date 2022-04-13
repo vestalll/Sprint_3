@@ -10,7 +10,6 @@ import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import ru.yascooter.client.CourierClient;
 import ru.yascooter.model.Courier;

@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.yascooter.model.Courier;
 import ru.yascooter.model.CourierCredentials;
+
 import static io.restassured.RestAssured.given;
 
 public class CourierClient extends ScooterRestClient {

@@ -9,7 +9,9 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.runners.Parameterized;
 import ru.yascooter.client.OrderClient;
 import ru.yascooter.model.Order;
+
 import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -34,7 +36,7 @@ public class CreateOrderTest {
                 List.of("GREY"),
                 List.of("BLACK", "GREY"),
                 List.of());
-        }
+    }
 
     @Before
     public void setUp() {

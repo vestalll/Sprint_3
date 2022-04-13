@@ -3,9 +3,11 @@ package ru.yascooter;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.*;
+
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+
 import ru.yascooter.client.CourierClient;
 import ru.yascooter.model.Courier;
 import ru.yascooter.model.CourierCredentials;
@@ -98,7 +100,7 @@ public class CreateCourierTest {
 
     @Test
     @Ignore
-    //Тест падает из-за бага
+    //Тест падает из-за бага: в ответе возвращается статус-код 500 вместо 400
     @DisplayName("Создание курьера с пустым значением поля \"FirstName\"")
     public void courierCreationWithEmptyFirstName() {
         courier.setFirstName("");

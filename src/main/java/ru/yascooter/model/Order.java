@@ -20,7 +20,7 @@ public class Order {
 
     private final String comment = "Как можно быстрее, пожалуйста, на 1-2-3";
 
-    private List<String>  scooterColor;
+    private List<String> scooterColor;
 
     public Order() {
     }
