@@ -1,5 +1,6 @@
 package ru.yascooter.client;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.yascooter.model.Order;
 import ru.yascooter.constants.ScooterApiEndpoint;
@@ -8,6 +9,8 @@ import static io.restassured.RestAssured.given;
 
 public class OrderClient extends ScooterRestClient{
     private static final String ORDER_PATH = ScooterApiEndpoint.orders;
+
+   @Step ("Создание заказа")
     public ValidatableResponse createOrder(Order order) {
         return given()
                 .spec(getBaseSpec())
@@ -17,6 +20,7 @@ public class OrderClient extends ScooterRestClient{
                 .then();
     }
 
+    @Step ("Получение списка заказов")
     public ValidatableResponse getOrderList() {
         return given()
                 .spec(getBaseSpec())
@@ -25,6 +29,7 @@ public class OrderClient extends ScooterRestClient{
                 .then();
     }
 
+    @Step ("Отмена заказа")
     public ValidatableResponse cancelOrder(String track) {
         return given()
                 .spec(getBaseSpec())

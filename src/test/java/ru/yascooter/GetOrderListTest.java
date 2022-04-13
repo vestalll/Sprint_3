@@ -5,6 +5,8 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
+import ru.yascooter.client.CourierClient;
+import ru.yascooter.client.OrderClient;
 
 import java.util.ArrayList;
 
@@ -13,18 +15,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class GetOrderListTest {
-    CourierClient courierClient;
+    OrderClient orderClient;
 
     @Before
     public void setUp() {
-        courierClient = new CourierClient();
+        orderClient = new OrderClient();
     }
 
     @Test
     @DisplayName("Получение списка заказов")
-    @Step("Код ответа 200. Список заказов получен")
     public void getOrderList() {
-        ValidatableResponse orderListResponse = courierClient.getOrderList();
+        ValidatableResponse orderListResponse = orderClient.getOrderList();
         int statusCode = orderListResponse.extract().statusCode();
         ArrayList<String> ordersList = orderListResponse.extract().path("orders");
         assertThat("Invalid status code", statusCode, equalTo(SC_OK));
