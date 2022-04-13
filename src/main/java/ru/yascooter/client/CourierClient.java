@@ -4,13 +4,11 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.yascooter.model.Courier;
 import ru.yascooter.model.CourierCredentials;
-import ru.yascooter.constants.ScooterApiEndpoint;
-
 import static io.restassured.RestAssured.given;
 
 public class CourierClient extends ScooterRestClient {
 
-    private static final String COURIER_PATH = ScooterApiEndpoint.courier;
+    private static final String COURIER_PATH = "/api/v1/courier/";
 
     @Step("Авторизация курьера")
     public ValidatableResponse login(CourierCredentials credentials) {
@@ -41,6 +39,4 @@ public class CourierClient extends ScooterRestClient {
                 .delete(COURIER_PATH + courierId)
                 .then();
     }
-
-
 }

@@ -3,12 +3,10 @@ package ru.yascooter.client;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.yascooter.model.Order;
-import ru.yascooter.constants.ScooterApiEndpoint;
-
 import static io.restassured.RestAssured.given;
 
 public class OrderClient extends ScooterRestClient{
-    private static final String ORDER_PATH = ScooterApiEndpoint.orders;
+    private static final String ORDER_PATH = "/api/v1/orders/";
 
    @Step ("Создание заказа")
     public ValidatableResponse createOrder(Order order) {
